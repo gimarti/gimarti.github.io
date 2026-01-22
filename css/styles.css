@@ -17,8 +17,12 @@
 
 html {
   scroll-behavior: smooth;
+  overflow: visible;
 }
 
+body {
+  overflow: visible;
+}
 /* ==========================================================================
    TEXT SIZE CLASSES (replacements for deprecated <font size=X> tags)
    
@@ -64,7 +68,7 @@ body {
    ========================================================================== */
 
 /* Top bar */
-.top {
+/*.top {
   width: 95%;
   position: fixed;
   background-color: #f7f7f7;
@@ -73,7 +77,7 @@ body {
   padding-left: 3%;
   padding-right: 3%;
   border-bottom: 1px solid #b2b2b2;
-}
+}*/
 
 /* Items container */
 .items {
@@ -82,7 +86,7 @@ body {
   padding-top: 50px;
 }
 
-/* Side bar */
+/* Side bar - desktop only */
 .sidebar {
   position: fixed;
   left: 45px;
@@ -110,6 +114,79 @@ body {
   color: #AA3333;
   text-decoration: none;
   transition: color 0s;
+}
+
+
+/* Top bar - mobile only */
+.topbar {
+  display: none;
+  background: #f9f5f0;
+  padding: 10px 15px;
+  border-bottom: 1px solid #c9c5c0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  font-style: italic;
+  box-sizing: border-box;
+/*  -webkit-transform: translateZ(0);*/
+}
+.topbar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.topbar a {
+  color: #777777;
+  text-decoration: none;
+}
+.topbar a:hover {
+  color: #AA3333;
+  text-decoration: none;
+  transition: color 0s;
+}
+
+/* Responsive: switch at 1280px */
+@media (max-width: 1280px) {
+  .sidebar {
+    display: none;
+  }
+  .topbar {
+    display: block;
+  }
+  .wrapper {
+    padding-top: 50px !important;
+  }
+}
+
+
+
+/* Publication boxes */
+
+.pub-row {
+  display: flex;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.pub-image {
+  width: 72px;
+  flex-shrink: 0;
+  margin-right: 15px;
+  margin-top: 4px;
+}
+
+.pub-image img {
+  max-width: 100%;
+}
+
+.pub-content {
+  flex: 1;
 }
 
 /* App boxes with image and text */

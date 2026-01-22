@@ -413,33 +413,29 @@ function renderPublication(id) {
     ? `<li><a href="${pub.code}" target="_blank"><i class="fa fa-file-code-o"></i> Code</a></li>`
     : '';
 
-  return `
-    <div class="row row-spacing" style="margin-bottom: 0px;">
-      <div class="col-sm-12">
-        <div class="row publication-${id}">
-          <div class="col-md-1 col-sm-3" style="width: 100px; margin-top: 5px;">
-            <a href="${pub.pdf}" target="_blank">
-              <img src="${pub.image}" class="img-rounded-border" style="padding: ${pub.imagePadding || '4px'};" alt="">
-            </a>
-          </div>
-          <div class="col-md-10 col-sm-9">
-            <div class="upper-row">
-              <b class="title">${pub.title}</b>
-              <div class="authors">${pub.authors}</div>
-              <div class="journal">${venueDisplay}</div>
-            </div>
-            <ul class="list-inline">
-              <li><a href="#" onclick="abstractModal('publication-${id}'); return false;"><i class="fa fa-align-left"></i> Abstract</a></li>
-              <li><a href="${pub.pdf}" target="_blank"><i class="fa fa-file-pdf-o"></i> ${pub.pdfLabel || 'Paper'}</a></li>
-              ${posterHtml}
-              ${codeHtml}
-              <li><a href="#" onclick="bibtexModal('publication-${id}'); return false;"><i class="fa fa-quote-left"></i> BibTeX</a></li>
-              ${awardHtml}
-            </ul>
-            <div class="hidden txt-bibtex">${pub.bibtex}</div>
-            <div class="hidden txt-abstract"><p>${pub.abstract}</p></div>
-          </div>
+return `
+    <div class="pub-row publication-${id}">
+      <div class="pub-image">
+        <a href="${pub.pdf}" target="_blank">
+          <img src="${pub.image}" class="img-rounded-border" style="padding: ${pub.imagePadding || '4px'};" alt="">
+        </a>
+      </div>
+      <div class="pub-content">
+        <div class="upper-row">
+          <b class="title">${pub.title}</b>
+          <div class="authors">${pub.authors}</div>
+          <div class="journal">${venueDisplay}</div>
         </div>
+        <ul class="list-inline">
+          <li><a href="#" onclick="abstractModal('publication-${id}'); return false;"><i class="fa fa-align-left"></i> Abstract</a></li>
+          <li><a href="${pub.pdf}" target="_blank"><i class="fa fa-file-pdf-o"></i> ${pub.pdfLabel || 'Paper'}</a></li>
+          ${posterHtml}
+          ${codeHtml}
+          <li><a href="#" onclick="bibtexModal('publication-${id}'); return false;"><i class="fa fa-quote-left"></i> BibTeX</a></li>
+          ${awardHtml}
+        </ul>
+        <div class="hidden txt-bibtex">${pub.bibtex}</div>
+        <div class="hidden txt-abstract"><p>${pub.abstract}</p></div>
       </div>
     </div>
   `;
