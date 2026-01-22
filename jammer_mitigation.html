@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Jammer Mitigation</title>
+
+
+    <!-- Bootstrap -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/fontsheet.css" /> 
+
+    <!-- MathJax scripts -->
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>   
+
+  </head>
+  
+<body>
+
+    <div class="sidebar" style="width:300px;">
+      <ul>
+        <li><a href="https://people.ee.ethz.ch/~gimarti/">&larr; home</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://people.ee.ethz.ch/~gimarti/understanding_MIMO_jammer_mitigation.html">understanding mitigation &rarr; </a> </li>
+        <li style="margin-bottom:40px"><a href="#">&uarr; top</a></li>
+        <li><a href="#jmd">Joint Mitigation & Detection</a></li>
+        <li><a href="#mash">Subspace Hiding</a></li>
+        <li><a href="#jass">Synchronization</a></li>
+        <li><a href="#finite">Finite Resolution</a></li>
+        <li><a href="#other">Other Topics</a></li>
+      </ul>
+    </div>
+
+     
+    <div class="wrapper">
+
+        <!--======== ABSTRACT  ========-->                     
+        <h1>Jammer Mitigation in Multi-Antenna Communications</h1>
+        <div class="summary">
+            Anyone can access the wireless medium—free space. This makes wireless communication systems vulnerable to jamming attacks,
+            where a jammer emits strong interference to make communication signals unintelligible.
+            As wireless communications has grown in significance, so has the threat of jammers.<sup>
+              <a href="https://www.economist.com/science-and-technology/2021/05/06/satellite-navigation-systems-such-as-gps-are-at-risk-of-jamming" target="_blank">[1],</a>
+              <a href="https://nationalinterest.org/blog/reboot/russia-working-jam-nato-communications-war-176111" target="_blank">[2],</a>
+              <a href="http://www.indiandefencereview.com/spotlights/the-unmanned-future-is-at-risk/" target="_blank">[3]</a>
+            </sup>
+            We therefore need ways to mitigate jammers. Techniques like direct-sequence spread spectrum (DSSS)<sup><a href="https://www.geeksforgeeks.org/direct-sequence-spread-spectrum-in-wireless-networks/">[4]</a></sup> or frequency-hopping spread spectrum (FHSS)<sup><a href="https://www.techtarget.com/searchnetworking/definition/frequency-hopping-spread-spectrum">[5]</a></sup> improve the robustness to interference but can be overcome by sufficiently powerful jammers. Multi-antenna (MIMO) processing, in contrast, <a href="https://people.ee.ethz.ch/~gimarti/understanding_MIMO_jammer_mitigation.html">enables the complete removal of jammer interference through spatial filtering,</a>* and offers a more promising path towards jammer-resilient communications. I study fundamental aspects of jamming in MIMO communications, and I work towards the mitigation of jammers using MIMO processing.
+            <br>
+            <hr style="height:1px;width:80%;text-align:right;margin-right:0; margin-top:7px; margin-bottom:2px;background-color:gray;">
+            <div align="right"><span class="text-size-3"><i>*Terms and conditions apply.</i></span></div>
+        </div>
+
+        <img src="./img/jammer_logo.png" width=500px class=center style="margin-bottom:50px;margin-top:50px"></img>
+
+
+        <!--======== JOINT JAMMER MITIGATION AND DATA DETECTION  ========-->             
+        <div id="jmd"><h4>Joint Jammer Mitigation and Data Detection</h4></div>
+        <p align='justify'>
+        In order to remove jammer interference with a spatial filter, a receiver must acquire knowledge of the jammer's spatial signature (e.g., its angle of arrival, when line-of-sight conditions hold; or its subspace; or its spatial covariance matrix). Estimating this spatial signature is easy for barrage jammers that jam continuously and with static transmit strategy. For smart jammers that try to evade estimation, however, estimating that spatial signature is much more challenging. In particular, smart jammers might cease jamming whenever the receiver tries to estimate their signature, or they might use time-varying beamforming (if they have multiple antennas) to continuously change their signature. 
+        In my research, I developed method to mitigate such smart jammers.</p>
+        <p align='justify'>
+        In particular, I developed two methods that can perform channel estimation and data detection while mitigating smart jammers. The first of these methods is called <em> joint jammer mitigation and data detection (JMD)</em>, and is described in the following paper:</p>
+        <div class="pub-entry" data-id="j-jmd"></div>
+        <p align='justify'>
+        In two student project that I have co-supervised, we have implemented two JMD-type algorithms as application-specific integrated circuits (ASICs). The resulting designs, Sandman and Maed, are not just the first MIMO receiver ASICs that can mitigate smart jammers, but the first MIMO receiver ASICs that mitigates jammers <em>at all.</em> Sandman has been presented at the VLSI Symposium 2024, and Maed has been presented at ESSERC 2025:
+            <div class="pub-entry" data-id="conf17"></div>
+            <div class="pub-entry" data-id="conf22"></div>
+            <div class="app_right paper">
+                <span>Sandman is the first MIMO receiver ASIC that mitigates jammers. It implements the JMD-type algorithm of the same name, and so can even mitigate smart jammers.</span>
+                <img src="./img/sandman_asic.jpg" width="170"/>
+            </div>
+        </p>
+
+        <!--======== MASH  ========-->    
+        <div id="mash"><h4>Mitigation via Subspace Hiding</h4></div>
+        <p align='justify'>
+        The second method that mitigates smart jammers during channel estimation and data detection is called <em>mitigation via subspace hiding (MASH)</em>, and is described in the following paper: 
+        <div class="pub-entry" data-id="j-mash"></div>
+        </p>
+
+
+        <!--======== JASS  ========-->             
+        <div id="jass"><h4>Jammer-Resilient Synchronization</h4></div>
+        <p align='justify'>
+        Communication requries more than channel estimation and data detection, however. In fact, before channel estimation and data detection can even begin, medium access control and synchronization need to be achieved. Under (smart) jamming, these tasks also become much harder. Together with a student whose thesis I have supervised, I have proposed a method for time-synchronization in the face of smart jamming attacks, called <em>JASS</em>. The method is described in the following paper which is currently under review:
+        <div class="pub-entry" data-id="j-sync"></div>
+        <div class="app_right paper">
+            <span>Jass.</span>
+            <img src="./img/jass_asic.jpg" width="170"/>
+        </div>
+        </p>
+
+
+        <!--======== FINITE-RESOLUTION  ========-->             
+        <div id="finite"><h4>Jammer Mitigation in Finite- and Low-Resolution MIMO</h4></div>
+        <p align='justify'>
+        The above methods for MIMO jammer mitigation are <em>digital,</em> meaning that they operate on the digitized version of the receive signal. Moreover, they are based on a <em>linear</em> signal model: they assume that the digital receive signal is a linear superposition of the legitimate communication signal, the jammer interference, and the noise. However, converting the analog receive signal into the digital domain necessarily involves nonlinear quantization, which is at odds with a linear signal model. In my reseach, I have proved information-theoretically that strong jammers exacerbate the adverse impact of quantization noise, and that the resolution of the quantization must improve by 1 bit for every 6.02dB of additional jamming power in order for digital jammer mitigation to remain possible:
+        <div class="pub-entry" data-id="conf20"></div>
+        <div class="app_left paper">
+            <img src="./img/finite_resolution_bound.jpg" width="275"/>
+            <span>The mutual information between finite-resolution receive signals and legitimate transmit signals decreases as the jammer power increases. <br> The figure shows cumulative distribution functions (CDFs) of an upper bound on said mutual information for a MIMO receiver with 2bit ADCs.</span>
+        </div>
+        </p>
+        <p align='justify'>
+        The issue of quantization noise is essentially pronounced in millimeter-wave (mmWave) massive MIMO systems, which are expected to rely on low-resolution analog-to-digital converters (ADCs). To alleviate the issue of exacerbated quantization noise, we have proposed hybrid methods where the jammer interference is largely prevented from reaching the ADCs through analog processing: 
+        <div class="pub-entry" data-id="conf8"></div>
+        <div class="pub-entry" data-id="j-snips"></div>
+        </p>
+        
+        <!--======== OTHER TOPICS  ========-->             
+        <div id="other"><h4>Other Topics in MIMO Jammer Mitigation</h4></div>
+        <p align='justify'>
+        Whitin the scope of a Master's thesis that I supervised, we wanted to leverage the power of machine learning for understanding jamming and jammer mitigation. For this, we developed <a href="http://pyjama.ethz.ch" target="_blank">PyJama</a>, an open-source library built on top of NVIDIA Sionna. PyJama brings jamming and anti-jamming capabilites to NVIDIA Sionna, and it does so in fully differentiable fashion. We then used PyJama for <em>learning to jam</em>, specifically, for learning how to optimally allocate jamming energy to different OFDM symbols. The PyJama library, as well as our results, are described in the following paper: 
+        <div class="pub-entry" data-id="conf19"></div>
+        <div class="app_top paper">
+        <img src="./img/jammer_powers.jpg"/>
+        <span>How to optimally allocate jamming power to different OFDM symbols depends on the total energy budget and on the number of user equipments (UEs) that are simultanously active in the attacked multi-user MIMO uplink.</span>
+        </div>
+
+        <p align='justify'>
+        I also investigated what happens in OFDM-MIMO under jamming when jammers violate the cyclic-prefix structure required by OFDM. It turns out that single-antenna jammers, whose interference would occupy a one-dimensional subspace of the signal space as long as the channels are frequency-flat, can occupy a subspace with dimension up to \(L\) when the channels are time-dispersive (where \(L\) is the number of non-zero channel taps). Thus, single-antenna jammers look like multi-antenna jammers, and are therefore harder to mitigate. The issue is expounded in the following paper: 
+        </p>
+        <div class="pub-entry" data-id="j-ofdm"></div>
+
+
+        <!-- Scripts at bottom load after content is visible -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="js/publications.js"></script>
+        <script src="js/modals.js"></script>
+
+    </body>
+</html>
