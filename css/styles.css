@@ -130,7 +130,7 @@ body {
   z-index: 100;
   font-style: italic;
   box-sizing: border-box;
-/*  -webkit-transform: translateZ(0);*/
+  -webkit-transform: translateZ(0);
 }
 .topbar ul {
   list-style: none;
